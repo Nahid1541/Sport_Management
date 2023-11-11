@@ -1,0 +1,147 @@
+﻿@model WebApplicationWithImageAndIcon.Models.ViewModels.PlayerViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2 class="display-4 alert alert-info mt-1">Add New Player</h2>
+
+<div class="card mt-3">
+    <div class="card-body">
+        @using (Html.BeginForm("Create", "Players", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken();
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row mb-3">
+                @Html.LabelFor(x => x.PlayerName, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-8">
+                    @Html.EditorFor(x => x.PlayerName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                </div>
+                <div class="col-sm-2">
+                    @Html.ValidationMessageFor(x => x.PlayerName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row mb-3">
+                @Html.LabelFor(x => x.PlayerGrade, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-8">
+                    @Html.EnumDropDownListFor(x => x.PlayerGrade, "---Select---", htmlAttributes: new { @class = "form-control form-control-sm form-select" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.ValidationMessageFor(x => x.PlayerGrade, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row mb-3">
+                @Html.LabelFor(x => x.SportsId, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(x => x.SportsId, ViewBag.sports as SelectList, "---Select---", htmlAttributes: new { @class = "form-control form-control-sm form-select" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.ValidationMessageFor(x => x.SportsId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row mb-3">
+                @Html.LabelFor(x => x.JoinDate, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-8">
+                    @Html.EditorFor(x => x.JoinDate, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date" } })
+                </div>
+                <div class="col-sm-2">
+                    @Html.ValidationMessageFor(x => x.JoinDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row mb-3">
+                @Html.LabelFor(x => x.Picture, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(x => x.Picture, new { @class = "form-control form-control-sm", type = "file" })
+                </div>
+                <div class="col-sm-2">
+                    @Html.ValidationMessageFor(x => x.Picture, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-10 offset-2">
+                    <button type="reset" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+                </div>
+            </div>
+        }
+
+        <div>
+            <button onclick="location.href='@Url.Action("Index", "Players")'" class="btn btn-link btn-sm" style="text-decoration:none;"><i class="fa fa-arrow-circle-left"></i> Back to list</button>
+        </div>
+    </div>
+</div>
+
+
+
+@*@model WebApplicationWithImageAndIcon.Models.ViewModels.PlayerViewModel
+    @{
+        ViewBag.Title = "Create";
+    }
+
+    <h2 class="display-4 alert alert-info mt-1">Add New Player</h2>
+
+    <div class="row">
+        <div class="col mt-lg-4">
+            @using (Html.BeginForm("Create", "Players", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken();
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row mb-3">
+                    @Html.LabelFor(x => x.PlayerName, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-8">
+                        @Html.EditorFor(x => x.PlayerName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.ValidationMessageFor(x => x.PlayerName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    @Html.LabelFor(x => x.PlayerGrade, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-8">
+                        @Html.EnumDropDownListFor(x => x.PlayerGrade, "---Select---", htmlAttributes: new { @class = "form-control form-control-sm form-select" })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.ValidationMessageFor(x => x.PlayerGrade, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    @Html.LabelFor(x => x.SportsId, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(x => x.SportsId, ViewBag.sports as SelectList, "---Select---", htmlAttributes: new { @class = "form-control form-control-sm form-select" })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.ValidationMessageFor(x => x.SportsId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    @Html.LabelFor(x => x.JoinDate, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-8">
+                        @Html.EditorFor(x => x.JoinDate, new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date" } })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.ValidationMessageFor(x => x.JoinDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    @Html.LabelFor(x => x.Picture, htmlAttributes: new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(x => x.Picture, new { @class = "form-control form-control-sm", type = "file" })
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.ValidationMessageFor(x => x.Picture, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-10 offset-2">
+                        <button type="reset" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
+                    </div>
+                </div>
+            }
+            <div>
+                <button onclick="location.href='@Url.Action("Index", "Players")'" class="btn btn-link btn-sm" style="text-decoration:none;"><i class="fa fa-arrow-circle-left"></i> Back to list</button>
+            </div>
+        </div>
+    </div>*@
+

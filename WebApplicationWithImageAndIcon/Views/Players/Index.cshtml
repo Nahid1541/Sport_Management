@@ -1,0 +1,85 @@
+﻿@model IEnumerable<WebApplicationWithImageAndIcon.Models.Player>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@using PagedList;
+@using PagedList.Mvc;
+
+<h2 class="display-4 alert alert-info mt-1">Player List</h2>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-8">
+                @using (Html.BeginForm("Index", "Players", FormMethod.Get, new { @class = "form-inline" }))
+                {
+                    <div class="d-flex">
+                        <div class="form-group mb-2">
+                            @Html.TextBox("searchString", null, new { @class = "form-control form-control-sm", placeholder = "Enter Player Name..." })
+                        </div>
+                        <div>
+                            <button type="submit" style="margin-left:2px;" class="btn btn-secondary btn-sm mb-2">Search</button>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-4">
+                <div class="d-flex justify-content-end">
+                    @Html.ActionLink("Add New", "Create", new { }, new { @class = "btn btn-primary btn-sm  mt-3" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col">
+                <table class="table table-bordered table-striped table-sm mt-1">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(x => x.PlayerName)</th>
+                            <th>@Html.DisplayNameFor(x => x.Sports.SportsName)</th>
+                            <th>@Html.DisplayNameFor(x => x.JoinDate)</th>
+                            <th>@Html.DisplayNameFor(x => x.PlayerGrade)</th>
+                            <th>Picture</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(x => item.PlayerName)</td>
+                                <td>@Html.DisplayFor(x => item.Sports.SportsName)</td>
+                                <td>@Html.DisplayFor(x => item.JoinDate)</td>
+                                <td>@Html.DisplayFor(x => item.PlayerGrade)</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.PicturePath))
+                                    {
+                                        <img src="@Url.Content(item.PicturePath)" width="35" height="35" />
+                                    }
+                                    else
+                                    {
+                                        <span>No Image Available</span>
+                                    }
+                                </td>
+                                <td>
+                                    <button onclick="location.href='@Url.Action("Edit", "Players", new {id = item.PlayerId})'" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i> Edit</button>
+                                    <button onclick="location.href='@Url.Action("Delete", "Players", new {id = item.PlayerId})'" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-end">
+                    @Html.PagedListPager(Model as IPagedList, page => Url.Action("Index", new { page }))
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section styles{
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+}
+
